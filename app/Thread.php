@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
+    public $guarded=[];
+
     public function path(){
         return '/threads/'.$this->id;
     }

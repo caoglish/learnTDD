@@ -43,7 +43,7 @@ class ReadThreadsTest extends TestCase
         $reply=facotry('App\Reply')->create(['thread_id'=>$this->thread_id]);
 
         $this->get('/threads/'.$this->thread->id)
-             ->assertSee($reply->body);
+            ->assertSee($reply->body);
 
 
 
