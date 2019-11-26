@@ -42,10 +42,10 @@ abstract class TestCase extends BaseTestCase
 
     }
 
-    //laravel original handing will handle Exception and no Exception to throw.
+    //laravel original handling will handle Exception and no Exception to throw.
     //if system will handle exception with some further action and no exception throw. test the further action, use this.
     //not default.
-    protected function withExceptionHanding()
+    protected function withExceptionHandling()
     {
         $this->app->instance(ExceptionHandler::class, $this->oldExceptionHandler);
         return $this;
