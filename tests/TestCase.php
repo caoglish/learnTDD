@@ -25,7 +25,7 @@ abstract class TestCase extends BaseTestCase
     }
 
 
-    //customize the exception handling and Exception will throw.
+    
     //if need to test by using withExceptionHanding(),require disable handling and app need to throw exception
     //default setup
     protected function disableExceptionHandling(){

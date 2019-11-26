@@ -2,10 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
+
 class CreateThreadsTest extends TestCase
 {
     use DatabaseMigrations;
@@ -16,20 +15,18 @@ class CreateThreadsTest extends TestCase
      */
     public function test_guest_user_can_not_create_new_forum_threads()
     {
-
-        $this->expectException('Illuminate\Auth\AuthenticationException');
-
-        $thread=make('App\Thread');
-        $this->post('/threads',$thread->toArray());
-
-    }
-
-    public function test_guest_cannot_see_create_page()
-    {
-
         $this->withExceptionHanding();
-        $this->get('/threads/create')->assertRedirect('/login');
 
+        $this->post('/threads')
+            ->assertRedirect('/login');
+
+        $this->get('/threads/create')
+            ->assertRedirect('/login');
+
+        // $this->expectException('Illuminate\Auth\AuthenticationException');
+
+        // $thread=make('App\Thread');
+        // $this->post('/threads',$thread->toArray());
 
     }
 
@@ -38,8 +35,9 @@ class CreateThreadsTest extends TestCase
 
         $this->signIn();
 
-        $thread=make('App\Thread');
-        $this->post('/threads',$thread->toArray());
+        $thread = create('App\Thread');
+        $this->post('/threads', $thread->toArray());
+
         $this->get($thread->path())
             ->assertSee($thread->title)
             ->assertSee($thread->body);

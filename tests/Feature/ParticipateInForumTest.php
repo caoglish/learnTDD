@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 class ParticipateInForumTest extends TestCase
 {
     use DatabaseMigrations;
@@ -16,17 +17,18 @@ class ParticipateInForumTest extends TestCase
         $thread = create('App\Thread');
         $reply = create('App\Reply');
 
-        $this->post('/threads/'.$thread->id.'/replies',$reply->toArray());
+        $this->post($thread->path().'/replies', $reply->toArray());
+        $this->assertRedirect('/login');
     }
     public function test_an_authenticated_user_may_participate_in_forum_threads()
     {
         $user= create('App\User');
-       $this->be($user);
+        $this->be($user);
 
         $thread = create('App\Thread');
         $reply = make('App\Reply');
-
-        $this->post('/threads/'.$thread->id.'/replies',$reply->toArray());
+       
+        $this->post($thread->path().'/replies', $reply->toArray());
         $this->get($thread->path())->assertSee($reply->body);
     }
 }
