@@ -1,2 +1,3 @@
-start cmd .
-php artisan serve
+call setEnv.bat
+start cmd . /k php artisan serve
+
